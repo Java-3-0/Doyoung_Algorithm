@@ -28,7 +28,7 @@ public class Main {
 			ascQueue.add(i);
 		}
 
-		// 숫자를 push, pop할 Stack 생성
+		// 수를 push, pop할 Stack 생성
 		Stack<Integer> stack = new Stack<Integer>();
 
 		// 목적 수열을 다 찾을 때까지 반복
