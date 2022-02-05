@@ -4,7 +4,7 @@
 
 <table>
   <tr>
-    <td> Hello </td>
+    <td> <b> Hello </b> </td>
     <td> World </td>
   </tr>
 </table>
