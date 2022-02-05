@@ -13,19 +13,21 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 
-		// 입력의 종료조건인 "." 하나로만 이루어진 줄을 만날 때까지 문자열을 입력받아서 sbInput에 추가
+		// 입력의 종료조건인 "." 하나로만 이루어진 줄을 만날 때까지 문자열을 입력받아서 sb에 추가
 		String line = "";
 		while (!((line = br.readLine()).equals("."))) {
 			sb.append(line);
 		}
 
-		// sbInput에 담긴 내용을 문자열로 변환
+		// sb에 담긴 내용을 문자열로 변환
 		String inputStr = sb.toString();
-		sb.setLength(0);
 		// "."을 기준으로 tokenize
 		String[] strings = inputStr.split("\\.");
+		
+		// sb를 출력에 재사용하기 위해 초기화
+		sb.setLength(0);
 
-		// 문자열의 괄호 올바름 여부를 sbOutput에 추가
+		// 문자열의 괄호 올바름 여부를 sb에 추가
 		for (int i = 0; i < strings.length; i++) {
 			if (isValid(strings[i])) {
 				sb.append("yes\n");
