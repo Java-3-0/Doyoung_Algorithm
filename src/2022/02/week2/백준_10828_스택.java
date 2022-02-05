@@ -56,10 +56,10 @@ public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int numCommands = Integer.parseInt(br.readLine());
-		stack = new Stack();
 		sb = new StringBuilder();
+		stack = new Stack();
 
+		int numCommands = Integer.parseInt(br.readLine());
 		// 명령 개수만큼 실행
 		for (int i = 0; i < numCommands; i++) {
 			// 명령을 입력받아서 공백으로 tokenize
