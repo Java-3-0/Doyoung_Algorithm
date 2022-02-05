@@ -74,7 +74,7 @@ public class Main {
 	/**
 	 * 하나의 명령을 처리해서 결과를 StringBuilder에 추가
 	 * 
-	 * @param command : command[0]에는 명령의 종류가, command[1]에는 push 명령에 한해서만 존재하며 넣을 정수가 들어 있는
+	 * @param command : command[0]에는 명령의 종류가, command[1]은 push 명령에 한해서만 존재하며 넣을 정수가 들어 있는
 	 *                String 배열
 	 */
 	public static void handleCommand(String[] command) {
