@@ -4,9 +4,8 @@
 
 <table>
   <tr>
-    <td>
-      Hello
-    </td>
+    <td> Hello </td>
+    <td> World </td>
   </tr>
 </table>
   
