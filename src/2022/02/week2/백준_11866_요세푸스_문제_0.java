@@ -31,6 +31,7 @@ public class Main {
 		System.out.print(sb.toString());
 	}
 
+	/** (N, K)-조세푸스 순열을 리턴 */
 	public static List<Integer> getJosephus(int N, int K) {
 		List<Integer> josephus = new ArrayList<Integer>(N);
 
@@ -40,6 +41,7 @@ public class Main {
 			queue.add(i);
 		}
 
+		// 모든 사람을 제거할 때까지 반복
 		while (!queue.isEmpty()) {
 			// (K - 1)명을 맨 앞에서 맨 뒤로 옮김
 			for (int i = 0; i < K - 1; i++) {
