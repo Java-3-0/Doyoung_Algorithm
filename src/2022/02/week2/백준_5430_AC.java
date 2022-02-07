@@ -1,4 +1,4 @@
-// 88504KB, 796ms
+// 88168KB, 872ms
 
 package baek5430;
 
@@ -9,17 +9,20 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
+/** Deque가 비어 있는데 원소를 제거하려 할 경우 던질 예외 */
 class DequeEmptyException extends Exception {
 	private static final long serialVersionUID = -2284720971332312338L;
 }
 
+/** D함수와 R함수를 처리하는 연산을 구현한 덱 클래스 */
 class MyDeque {
-	private Deque<Integer> deque = new LinkedList<>();
-	private boolean isReverse = false;
+	private Deque<Integer> deque;
+	private boolean isReverse;
 
 	public MyDeque(Deque<Integer> deque) {
 		super();
 		this.deque = deque;
+		this.isReverse = false;
 	}
 
 	/** 뒤집는 함수 : deque 자체는 그대로 두고, 뒤집혔다는 뜻으로 isReverse라는 boolean 값만 변경 */
@@ -28,15 +31,17 @@ class MyDeque {
 	}
 
 	/**
-	 * 버리는 함수 : 뒤집혀 있으면 뒤에서, 뒤집혀 있지 않으면 앞에서 제거
+	 * 버리는 함수
 	 * 
 	 * @throws DequeEmptyException
 	 */
 	public void functionD() throws DequeEmptyException {
+		// 이미 비어 있는데 제거하려 하면 예외를 throw
 		if (deque.isEmpty()) {
 			throw new DequeEmptyException();
 		}
-
+		
+		//  뒤집혀 있으면 뒤에서, 뒤집혀 있지 않으면 앞에서 제거
 		if (isReverse) {
 			deque.removeLast();
 		} else {
@@ -44,7 +49,7 @@ class MyDeque {
 		}
 	}
 
-	/** deque를 String으로 리턴하는 함수 : 뒤집혀 있지 않으면 그대로, 뒤집혀 있다면 뒤집어서 리턴 */
+	/** deque를 String으로 리턴하는 함수 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -87,6 +92,7 @@ public class Main {
 		// 테스트 케이스 개수 입력
 		int T = Integer.parseInt(br.readLine());
 
+		// 테스트 케이스 수만큼 반복
 		testLoop: for (int test_case = 0; test_case < T; test_case++) {
 			// sb 초기화
 			sb.setLength(0);
