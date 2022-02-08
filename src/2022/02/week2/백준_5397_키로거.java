@@ -1,4 +1,4 @@
-// 123324KB, 660ms
+// 134972KB, 648ms
 
 package baek5397;
 
@@ -78,7 +78,9 @@ class MyList {
 
 		// 지울 노드가 존재하면 삭제
 		if (node != head && node != tail) {
+			// 지울 노드의 이전 노드였던 노드
 			Node prevNode = node.prev;
+			// 지울 노드의 다음 노드였던 노드
 			Node nextNode = node.next;
 			
 			// 노드들의 연결 관계 갱신
@@ -111,10 +113,11 @@ public class Main {
 		for (int testCase = 1; testCase <= T; testCase++) {
 			String s = br.readLine();
 
+			// 비밀번호를 나타낼 리스트
 			MyList list = new MyList();
 
-			for (int i = 0; i < s.length(); i++) {
-				char c = s.charAt(i);
+			// 각 입력 문자마다 해당하는 명령 수행
+			for (char c : s.toCharArray()) {
 				switch (c) {
 				case '<':
 					list.moveCursorLeft();
@@ -131,6 +134,7 @@ public class Main {
 				}
 			}
 
+			// 결과 출력
 			System.out.print(list.toString());
 		}
 	}
