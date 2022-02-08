@@ -14,7 +14,7 @@ class Building {
 	int num;
 	/** 건물을 짓는 데 걸리는 시간 */
 	int buildTime;
-	/** 건물을 짓기 위해 선행 조건으로 완성시켜야 하는 건물들의 리스트 */
+	/** 건물을 짓기 위해 선행 조건으로 완성시켜야 하는 건물들의 번호 리스트 */
 	List<Integer> prerequisites = new ArrayList<Integer>();
 
 	/** 건물 번호와 건설 시간을 받아서 건물을 생성하는 생성자 */
