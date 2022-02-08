@@ -23,7 +23,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-
+		// 풍선 개수 입력
 		int N = sc.nextInt();
 
 		// 풍선들을 입력받아서 deque에 추가
@@ -45,6 +45,7 @@ public class Main {
 		System.out.print(sb.toString());
 	}
 
+	/** 풍선들이 담긴 deque를 파라미터로 받아서 터뜨리는 순서를 리턴 */
 	public static Integer[] getPopOrder(Deque<Balloon> deque) {
 		Integer[] ret = new Integer[deque.size()];
 		int idx = 0;
