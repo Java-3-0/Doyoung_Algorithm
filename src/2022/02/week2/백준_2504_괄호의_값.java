@@ -18,14 +18,13 @@ public class Main {
 		System.out.println(answer);
 	}
 
+	/** 괄호의 값을 계산해서 리턴 */
 	public static int valOfParenthesis(String parenthesis) {
 		Stack<Character> stack = new Stack<>();
 
 		int ret = 0;
-		
 		for (int i = 0; i < parenthesis.length(); i++) {
 			char c = parenthesis.charAt(i);
-			
 			
 			switch (c) {
 			case '(':
@@ -61,6 +60,7 @@ public class Main {
 		return 0;
 	}
 
+	/** 닫는 괄호를 입력받아, 같은 쌍이 되는 여는 괄호를 리턴 */
 	public static int closeToOpen(char c) {
 		switch (c) {
 		case ')':
