@@ -1,5 +1,8 @@
 # Doyoung_Algorithm
-## 열심히 하자!
+## 일정
+월/목 10시 리뷰
 
 ## 해결한 문제
-[Baekjoon](https://www.acmicpc.net/problemset?user=dyim0403&user_solved=1)
+[BAEKJOON](https://www.acmicpc.net/problemset?user=dyim0403&user_solved=1)
+[SWEA]
+[JUNGOL]
