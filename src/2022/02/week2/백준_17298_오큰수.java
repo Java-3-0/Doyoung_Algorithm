@@ -77,9 +77,9 @@ public class Main {
 			// 스택에 쌓여있는 수 중 num보다 작은 수들의 오큰수는 num이 됨
 			while (!stack.empty() && stack.peek().getNumber() < num) {
 				// 오큰수를 찾았으니 스택에서 제거
-				Element e = stack.pop();
+				Element popped = stack.pop();
 				// 오큰수 값 갱신
-				nextGreaterElement[e.getIdx()] = num;
+				nextGreaterElement[popped.getIdx()] = num;
 			}
 
 			// 이번에 만난 원소도 오큰수를 찾아야 하니 stack에 push
