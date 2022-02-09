@@ -75,7 +75,7 @@ public class Main {
 	 * 입력받은 수식에서 괄호를 제거하는 모든 부분집합을 생성하여 subsets 전역변수에 담음
 	 * 
 	 * @param startIdx : 문자열에서 이 위치부터 시작
-	 * @param accum    : 현재까지 쌓인 문자열을 담는 스트링빌더
+	 * @param accum    : 현재까지 쌓인 문자열을 담는 스트링
 	 */
 	public static void generateSubsets(int startIdx, String accum) {
 		// 끝까지 왔을 경우 부분집합 하나가 완성되었으므로 subsets 전역변수에 추가
