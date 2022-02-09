@@ -56,7 +56,7 @@ public class Main {
 		int length = towers.length;
 		// 송신한 레이저를 아직 아무도 수신하지 않아서 대기중인 타워들이 담길 스택 생성
 		Stack<Tower> stack = new Stack<Tower>();
-		//
+		// 탑 번호가 0이 아니라 1부터 시작하므로 크기를 하나 크게 잡아서, 탑 번호를 그대로 index로 쓰기 위함
 		int[] laserReceivers = new int[length + 1];
 
 		// 맨 오른쪽 타워부터 왼쪽으로 탐색
