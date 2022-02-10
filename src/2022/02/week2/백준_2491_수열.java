@@ -20,7 +20,10 @@ public class Main {
 			seq[i] = Integer.parseInt(st.nextToken());
 		}
 
+		// 문제에서 요구하는 최대 길이 계산
 		int answer = maxLengthAscOrDesc(seq);
+		
+		// 출력
 		System.out.println(answer);
 	}
 
@@ -54,7 +57,7 @@ public class Main {
 			prev = num;
 		}
 
-		// 수열에 맨 끝에서 쌓인 count로 ret 한 번 더 갱신
+		// 수열의 맨 끝에서 쌓인 count로 ret 한 번 더 갱신
 		ret = Math.max(ret, countAsc);
 		ret = Math.max(ret, countDesc);
 
