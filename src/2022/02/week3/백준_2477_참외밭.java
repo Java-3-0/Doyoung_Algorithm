@@ -47,7 +47,7 @@ public class Main {
 		}
 		int smallArea = smallSide1 * smallSide2;
 
-		// 큰 사각형의 넓이 계산
+		// 큰 사각형의 넓이 계산 (가로의 최대치와 세로의 최대치의 곱)
 		int bigSide1 = 0;
 		int bigSide2 = 0;
 		for (int i = 0; i < 3; i++) {
