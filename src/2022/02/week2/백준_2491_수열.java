@@ -61,29 +61,4 @@ public class Main {
 
 		return ret;
 	}
-
-	/** 수열에서 내림차순인 부분의 최대 길이를 리턴 */
-	public static int maxDescending(int[] arr) {
-		int ret = 0;
-
-		int prev = Integer.MAX_VALUE;
-		int count = 0;
-		for (int num : arr) {
-			if (prev >= num) {
-				count++;
-			}
-			// 내림차순 부분이 끊기는 경우에 ret 갱신, count 갱신
-			else {
-				ret = Math.max(ret, count);
-				count = 1;
-			}
-
-			prev = num;
-		}
-
-		// 수열에 맨 끝에서 쌓인 count로 ret 한 번 더 갱신
-		ret = Math.max(ret, count);
-
-		return ret;
-	}
 }
