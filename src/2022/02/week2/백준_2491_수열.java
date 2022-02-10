@@ -1,0 +1,89 @@
+// 23436KB, 268ms
+
+package baek2491;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		// 입력
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
+
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+		int[] seq = new int[N];
+		for (int i = 0; i < N; i++) {
+			seq[i] = Integer.parseInt(st.nextToken());
+		}
+
+		int answer = maxLengthAscOrDesc(seq);
+		System.out.println(answer);
+	}
+
+	/** 수열에서 오름차순 또는 내림차순인 부분의 최대 길이를 리턴 */
+	public static int maxLengthAscOrDesc(int[] arr) {
+		int length = arr.length;
+		int ret = 0;
+
+		int countAsc = 1;
+		int countDesc = 1;
+
+		int prev = arr[0];
+		for (int i = 1; i < length; i++) {
+			int num = arr[i];
+			if (prev == num) {
+				countAsc++;
+				countDesc++;
+			}
+
+			else if (prev < num) {
+				countAsc++;
+				ret = Math.max(ret, countDesc);
+				countDesc = 1;
+			}
+
+			else {
+				countDesc++;
+				ret = Math.max(ret, countAsc);
+				countAsc = 1;
+			}
+
+			prev = num;
+		}
+
+		// 수열에 맨 끝에서 쌓인 count로 ret 한 번 더 갱신
+		ret = Math.max(ret, countAsc);
+		ret = Math.max(ret, countDesc);
+
+		return ret;
+	}
+
+	/** 수열에서 내림차순인 부분의 최대 길이를 리턴 */
+	public static int maxDescending(int[] arr) {
+		int ret = 0;
+
+		int prev = Integer.MAX_VALUE;
+		int count = 0;
+		for (int num : arr) {
+			if (prev >= num) {
+				count++;
+			}
+			// 내림차순 부분이 끊기는 경우에 ret 갱신, count 갱신
+			else {
+				ret = Math.max(ret, count);
+				count = 1;
+			}
+
+			prev = num;
+		}
+
+		// 수열에 맨 끝에서 쌓인 count로 ret 한 번 더 갱신
+		ret = Math.max(ret, count);
+
+		return ret;
+	}
+}
