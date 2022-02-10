@@ -1,4 +1,4 @@
-// 17672KB, 204ms
+// 17756KB, 220ms
 
 package baek2477;
 
@@ -33,20 +33,18 @@ public class Main {
 			lengths[i] = sc.nextInt();
 		}
 
-		// 혼자만 시계방향으로 진행되는 선 파악 -> 그 선과 그 이전 선이 작은 사각형을 이룸
+		// 작은 사각형의 넓이 계산 (반시계방향 -> 시계방향이 되는 두 선이 작은 사각형을 이룸)
 		int smallSide1 = 0;
 		int smallSide2 = 0;
 		for (int i = 0; i < 6; i++) {
-			int prevDir = directions[prevIdx(i)];
 			int curDir = directions[i];
+			int nextDir = directions[nextIdx(i)];
 
-			if (counterClockwise.get(prevDir) != curDir) {
-				smallSide1 = lengths[prevIdx(i)];
-				smallSide2 = lengths[i];
+			if (counterClockwise.get(curDir) != nextDir) {
+				smallSide1 = lengths[i];
+				smallSide2 = lengths[nextIdx(i)];
 			}
 		}
-		
-		// 작은 사각형의 넓이 계산
 		int smallArea = smallSide1 * smallSide2;
 
 		// 큰 사각형의 넓이 계산
@@ -69,7 +67,7 @@ public class Main {
 	}
 	
 	/** 배열 범위를 벗어나지 않고 원형으로 탐색할 때, 이전 인덱스를 구한다 */
-	public static int prevIdx (int n) {
-		return (n + 6 - 1) % 6;
+	public static int nextIdx (int n) {
+		return (n + 1) % 6;
 	}
 }
