@@ -14,10 +14,9 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 
-		// 입력을 받아 목적 수열을 Queue로 생성
+		// 입력을 받아 목표 수열을 Queue로 생성
 		int length = Integer.parseInt(br.readLine());
 		Queue<Integer> targetQueue = new LinkedList<Integer>();
-
 		for (int i = 0; i < length; i++) {
 			targetQueue.add(Integer.parseInt(br.readLine()));
 		}
@@ -31,7 +30,7 @@ public class Main {
 		// 수를 push, pop할 Stack 생성
 		Stack<Integer> stack = new Stack<Integer>();
 
-		// 목적 수열을 다 찾을 때까지 반복
+		// 목표 수열을 다 찾을 때까지 반복
 		while (!targetQueue.isEmpty()) {
 			// 스택이 비어 있다면 다음으로 넣어야 할 수를 하나 push
 			if (stack.empty()) {
