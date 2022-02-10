@@ -10,11 +10,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		
 		int numStudents = sc.nextInt();
-		List<Integer> studentLine = new ArrayList<>();
 		
 		// 줄 세우기
+		List<Integer> studentLine = new ArrayList<>();
 		for (int num = 1; num <= numStudents; num++) {
 			// 앞으로 갈 칸 수 입력
 			int moveForward = sc.nextInt();
@@ -31,6 +30,8 @@ public class Main {
 		}
 		sb.append("\n");
 		System.out.print(sb);
+		
+		sc.close();
 	}
 
 }
