@@ -1,4 +1,4 @@
-// 23436KB, 268ms
+// 22952KB, 264ms
 
 package baek2491;
 
@@ -26,14 +26,13 @@ public class Main {
 
 	/** 수열에서 오름차순 또는 내림차순인 부분의 최대 길이를 리턴 */
 	public static int maxLengthAscOrDesc(int[] arr) {
-		int length = arr.length;
 		int ret = 0;
 
 		int countAsc = 1;
 		int countDesc = 1;
 
 		int prev = arr[0];
-		for (int i = 1; i < length; i++) {
+		for (int i = 1; i < arr.length; i++) {
 			int num = arr[i];
 			if (prev == num) {
 				countAsc++;
