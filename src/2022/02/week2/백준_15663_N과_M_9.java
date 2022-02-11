@@ -1,4 +1,4 @@
-// 31976KB, 444ms
+// 23712KB, 284ms
 
 package baek15654;
 
