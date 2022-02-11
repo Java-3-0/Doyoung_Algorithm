@@ -38,7 +38,7 @@ public class Main {
 		System.out.print(sb.toString());
 	}
 
-	/** 중복조합을 계산해서 스트링빌더에 담는다 */
+	/** 조합을 계산해서 스트링빌더에 담는다 */
 	public static void combination(int start, int count) {
 		if (count == M) {
 			for (int i = 0; i < M; i++) {
