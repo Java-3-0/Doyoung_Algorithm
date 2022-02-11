@@ -1,4 +1,4 @@
-// 24276KB, 296ms
+// 23344KB, 280ms
 
 package baek2559;
 
@@ -18,8 +18,8 @@ public class Main {
 		int K = Integer.parseInt(st.nextToken());
 
 		st = new StringTokenizer(br.readLine(), " ");
-		int seq[] = new int[N + 1];
-		for (int i = 1; i <= N; i++) {
+		int seq[] = new int[N];
+		for (int i = 0; i < N; i++) {
 			seq[i] = Integer.parseInt(st.nextToken());
 		}
 
@@ -37,13 +37,13 @@ public class Main {
 
 	/** 부분합을 계산해서 배열로 리턴 */
 	public static int[] getPsums(int[] arr) {
-		int[] ret = new int[arr.length];
+		int[] ret = new int[arr.length + 1];
 
 		ret[0] = 0;
 		int sum = 0;
-		for (int i = 1; i < arr.length; i++) {
+		for (int i = 0; i < arr.length; i++) {
 			sum += arr[i];
-			ret[i] = sum;
+			ret[i + 1] = sum;
 		}
 
 		return ret;
