@@ -31,7 +31,7 @@ public class Main {
 		// 입력받은 수열 오름차순 정렬
 		Arrays.sort(input);
 
-		// 중복조합 생성
+		// 조합 생성
 		combination(0, 0);
 
 		// 출력
