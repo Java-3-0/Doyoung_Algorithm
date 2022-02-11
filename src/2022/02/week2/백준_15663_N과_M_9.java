@@ -56,15 +56,15 @@ public class Main {
 
 		for (int pickIdx = 0; pickIdx < N; pickIdx++) {
 			int num = input[pickIdx];
-            // 쓸 수 있는 개수가 더 이상 없는 경우
+			// 쓸 수 있는 개수가 더 이상 없는 경우
 			if (canUse[num] <= 0)
 				continue;
 
-            // 이전 idx와 이번 idx에 들은 값이 같아서 한 번만 세고 스킵해야 하는 경우
+			// 이전 idx와 이번 idx에 들은 값이 같아서 한 번만 세고 스킵해야 하는 경우
 			if (pickIdx >= 1 && input[pickIdx] == input[pickIdx - 1])
 				continue;
 
-            // 재귀 호출 부분
+			// 재귀 호출 부분
 			canUse[num]--;
 			permu[count] = num;
 			permutation(count + 1);
