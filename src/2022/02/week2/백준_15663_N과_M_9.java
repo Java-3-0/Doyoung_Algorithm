@@ -1,6 +1,6 @@
 // 23712KB, 284ms
 
-package baek15654;
+package baek15663;
 
 import java.util.Arrays;
 import java.util.Scanner;
