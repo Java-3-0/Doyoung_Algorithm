@@ -1,4 +1,4 @@
-// 37032KB, 520ms
+// 36540KB, 412ms
 
 package baek16927;
 
