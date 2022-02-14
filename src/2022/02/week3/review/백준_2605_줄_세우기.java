@@ -1,4 +1,4 @@
-// 17636KB, 220ms
+// 13064KB, 116ms
 
 package baek2605;
 
