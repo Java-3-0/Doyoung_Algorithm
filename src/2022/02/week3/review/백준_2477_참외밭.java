@@ -1,4 +1,4 @@
-// 17756KB, 220ms
+// 12928KB, 108ms
 
 package baek2477;
 
