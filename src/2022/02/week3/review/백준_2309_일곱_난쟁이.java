@@ -1,4 +1,4 @@
-// 17720KB, 204ms
+// 12912KB, 108ms
 
 package baek2309;
 
