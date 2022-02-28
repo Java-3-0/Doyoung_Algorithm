@@ -5,88 +5,114 @@ package bj1197;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
-	static class Edge {
-		int to;
-		int weight;
-		
-		public Edge(int to, int weight) {
+	static final int MAX_V = 10000;
+	static final int MAX_E = 100000;
+
+	static class DisjointSet {
+		int[] parent = new int[MAX_V + 1];
+
+		/** 모든 원소의 대표자를 자기 자신으로 초기화하는 생성자 */
+		public DisjointSet() {
 			super();
+			Arrays.fill(parent, -1);
+		}
+
+		/** a의 대표자를 찾는다 */
+		public int find(int a) {
+			// 자기 자신이 대표자인 경우 그대로 리턴한다.
+			if (parent[a] < 0) {
+				return a;
+			}
+
+			// path compression을 적용하면서 재귀적으로 대표자를 찾는다.
+			return parent[a] = find(parent[a]);
+		}
+
+		/** a와 b를 같은 집합으로 합친다. 합치는 데 성공하면 true, 실패하면 false를 리턴 */
+		public boolean union(int a, int b) {
+			int aRoot = find(a);
+			int bRoot = find(b);
+
+			// 이미 같은 집합인 경우 false를 리턴하고 끝낸다.
+			if (aRoot == bRoot) {
+				return false;
+			}
+
+			// 이외의 경우, 대표자를 갱신하고 true를 리턴한다.
+			parent[bRoot] = aRoot;
+			return true;
+		}
+	}
+
+	static class Edge implements Comparable<Edge> {
+		/** 간선이 시작되는 정점 */
+		int from;
+		/** 간선이 끝나는 정점 */
+		int to;
+		/** 간선의 가중치 */
+		int weight;
+
+		/** 시작 정점, 끝 정점, 가중치를 받아서 간선 객체를 생성하는 생성자 */
+		public Edge(int from, int to, int weight) {
+			super();
+			this.from = from;
 			this.to = to;
 			this.weight = weight;
 		}
+
+		/** 간선 가중치 오름차순으로 정렬하기 위한 비교함수 */
+		@Override
+		public int compareTo(Edge e) {
+			return this.weight - e.weight;
+		}
+
 	}
-	
+
 	// 메인 함수 시작
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
+		StringBuilder sb = new StringBuilder();
 
-		
 		// 정점 개수, 간선 개수 입력
 		st = new StringTokenizer(br.readLine(), " ");
 		int V = Integer.parseInt(st.nextToken());
 		int E = Integer.parseInt(st.nextToken());
-		
-		// 그래프 인접 리스트 표현
-		ArrayList<Edge>[] adjList = new ArrayList[V];
-		// 타 정점에서 자신으로의 간선 비용 중 최소 비용을 저장할 배열
-		int[] minEdges = new int[V];
-		// 신장트리에 포함되었는지 여부를 나타낼 배열
-		boolean[] isVisited = new boolean[V];
-		
-		// 배열 초기화
-		for (int i = 0; i < V; i++) {
-			adjList[i] = new ArrayList<Edge>();
-		}
-		Arrays.fill(minEdges, Integer.MAX_VALUE);
-		Arrays.fill(isVisited, false);
-		
+
 		// 각 간선 정보를 입력받아서 배열에 저장
+		Edge[] edges = new Edge[E];
 		for (int i = 0; i < E; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
-			int from = Integer.parseInt(st.nextToken()) - 1;
-			int to = Integer.parseInt(st.nextToken()) - 1;
+			int from = Integer.parseInt(st.nextToken());
+			int to = Integer.parseInt(st.nextToken());
 			int weight = Integer.parseInt(st.nextToken());
-			adjList[from].add(new Edge(to, weight));
-			adjList[to].add(new Edge(from, weight));
+			edges[i] = new Edge(from, to, weight);
 		}
-		
-		// 0번 정점에서 출발
-		int result = 0;
-		minEdges[0] = 0;
 
-		// N개의 정점이 모두 연결될 때까지 반복
-		for (int i = 0; i < V; i++) {
-			int min = Integer.MAX_VALUE;
-			int minVertex = 0;
-			
-			for (int v = 0; v < V; v++) {
-				if (!isVisited[v] && minEdges[v] < min) {
-					min = minEdges[v];
-					minVertex = v;
-				}
-			} // end for v
+		// 간선 가중치 오름차순으로 정렬
+		Arrays.sort(edges);
 
-			// 방문 여부 갱신하고, 간선 길이만큼 정답에 더함
-			isVisited[minVertex] = true;
-			result += min;
+		// 상호 배타적 집합 생성
+		DisjointSet ds = new DisjointSet();
 
-			// minEdges 배열 갱신
-			for (Edge e : adjList[minVertex]) {
-				if (!isVisited[e.to]) {
-					minEdges[e.to] = Math.min(minEdges[e.to], e.weight);
+		int sumWeight = 0;
+		int countEdges = 0;
+		for (Edge edge : edges) {
+			// 싸이클이 안 생겨서 합칠 수 있는 경우 합친다.
+			if (ds.union(edge.from, edge.to)) {
+				sumWeight += edge.weight;
+				countEdges++;
+				if (countEdges == V - 1) {
+					break;
 				}
 			}
-			
-		} // end for i
-		
-		System.out.println(result);
+		}
+
+		System.out.println(sumWeight);
 
 	} // end main
-
 }
