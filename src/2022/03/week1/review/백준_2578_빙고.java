@@ -1,11 +1,12 @@
-// 12988KB, 128ms
+// 11732KB, 88ms
 
-package baek2578;
+package bj2578;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
 class Position {
@@ -13,6 +14,7 @@ class Position {
 	int y;
 	/** x좌표 */
 	int x;
+
 	/** y좌표, x좌표를 입력받아 객체를 생성하는 생성자 */
 	public Position(int y, int x) {
 		super();
@@ -25,37 +27,38 @@ public class Main {
 	public static final int BINGO_SIZE = 5;
 
 	public static void main(String[] args) throws IOException {
-		Scanner sc = new Scanner(System.in);
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
-		
+
 		// 입력을 받아서 수 -> 빙고판에서의 위치로의 매핑 생성
-		Map<Integer, Position> board = new HashMap<> ();
-		for (int y = 0 ; y < BINGO_SIZE; y++) {
+		Map<Integer, Position> board = new HashMap<>();
+		for (int y = 0; y < BINGO_SIZE; y++) {
+			st = new StringTokenizer(br.readLine(), " ");
 			for (int x = 0; x < BINGO_SIZE; x++) {
-				board.put(sc.nextInt(), new Position(y, x));
+				board.put(Integer.parseInt(st.nextToken()), new Position(y, x));
 			}
 		}
-		
+
 		// 입력을 받아서 사회자가 부르는 수의 배열 생성
 		int[] calls = new int[BINGO_SIZE * BINGO_SIZE];
-		for (int y = 0 ; y < BINGO_SIZE; y++) {
+		for (int y = 0; y < BINGO_SIZE; y++) {
+			st = new StringTokenizer(br.readLine(), " ");
 			for (int x = 0; x < BINGO_SIZE; x++) {
-				calls[BINGO_SIZE * y + x] = sc.nextInt();
+				calls[BINGO_SIZE * y + x] = Integer.parseInt(st.nextToken());
 			}
 		}
-		
-		
+
 		int[] sumY = new int[BINGO_SIZE];
 		int[] sumX = new int[BINGO_SIZE];
 		int[] sumDiagonal = new int[2];
-		
+
 		int countBingo = 0;
 		int answer = 0;
 		for (int i = 0; i < calls.length; i++) {
 			Position p = board.get(calls[i]);
 			int y = p.y;
 			int x = p.x;
-			
+
 			if (++sumY[y] == BINGO_SIZE) {
 				countBingo++;
 			}
@@ -72,15 +75,15 @@ public class Main {
 					countBingo++;
 				}
 			}
-			
+
 			if (countBingo >= 3) {
 				answer = i + 1;
 				break;
 			}
 		}
-		
+
 		System.out.println(answer);
-		
+
 	}
 
 }
