@@ -22,7 +22,7 @@ public class Main {
 	static int Q;
 	/** 추의 무게들 */
 	static int[] weights;
-	/** isPossible[i][j]는 i번 구슬까지 고려했을 때, j 무게의 측정 가능 여부 */
+	/** isPossible[i % 2][j]는 i번 구슬까지 고려했을 때, j 무게의 측정 가능 여부 */
 	static boolean[][] isPossible = new boolean[2][MAX_TOTAL_WEIGHT + 1];
 
 	public static void main(String[] args) throws Exception {
