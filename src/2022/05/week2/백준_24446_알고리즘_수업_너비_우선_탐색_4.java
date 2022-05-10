@@ -1,0 +1,99 @@
+// 87744KB, 920ms
+
+package bj24447;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main {
+	static final int MAX_V = 100000;
+	static final int MAX_E = 200000;
+	static final int NOT_VISITED = -1;
+
+	static List<Integer>[] adjList = new ArrayList[MAX_V + 1];
+	static int[] depths = new int[MAX_V + 1];
+	static int[] visitOrder = new int[MAX_V + 1];
+	static int V, E, R;
+	static int visitCnt = 0;
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+
+		// adjList 메모리 할당
+		for (int i = 0; i < adjList.length; i++) {
+			adjList[i] = new ArrayList<Integer>();
+		}
+
+		// 정점 수, 간선 수, 시작 정점 번호 입력
+		st = new StringTokenizer(br.readLine(), " ");
+		V = Integer.parseInt(st.nextToken());
+		E = Integer.parseInt(st.nextToken());
+		R = Integer.parseInt(st.nextToken());
+
+		// 간선 정보 입력
+		for (int i = 0; i < E; i++) {
+			st = new StringTokenizer(br.readLine(), " ");
+			int from = Integer.parseInt(st.nextToken());
+			int to = Integer.parseInt(st.nextToken());
+			adjList[from].add(to);
+			adjList[to].add(from); // 양방향 처리
+		}
+		
+		// 간선 정보 오름차순 정렬
+		for (int i = 0; i < adjList.length; i++) {
+			Collections.sort(adjList[i]);
+		}
+
+		// 방문 여부 초기화
+		Arrays.fill(depths, NOT_VISITED);
+
+		// bfs 수행
+		bfs(R);
+
+		// 출력
+		long answer = 0L;
+		for (int v = 1; v <= V; v++) {
+			answer += (long) depths[v] * (long) visitOrder[v];
+		}
+		System.out.println(answer);
+
+	} // end main
+
+	/** bfs 수행 */
+	public static void bfs(int start) {
+		// 큐 선언
+		Queue<Integer> q = new ArrayDeque<>();
+
+		// 시작 정점 처리
+		int depth = 0;
+		depths[start] = 0;
+		visitOrder[start] = ++visitCnt;
+		q.offer(start);
+
+		while (!q.isEmpty()) {
+			depth++;
+			int size = q.size();
+
+			for (int i = 0; i < size; i++) {
+				int now = q.poll();
+				for (int next : adjList[now]) {
+					if (depths[next] == NOT_VISITED) {
+						depths[next] = depth;
+						visitOrder[next] = ++visitCnt;
+						q.offer(next);
+					}
+				}
+			}
+		}
+	}
+
+}
