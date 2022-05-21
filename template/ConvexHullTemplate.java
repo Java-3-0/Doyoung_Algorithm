@@ -187,7 +187,7 @@ public class ConvexHullTemplate {
 			return false;
 		}
 
-		// 이외의 경우, 어느 점과 어느 점 사이 각도에 포함되는지 찾는다
+		// 이외의 경우, 어느 점과 어느 점 사이 각도에 포함되는지 찾는다 (이분탐색)
 		while (left + 1 < right) {
 			int mid = (left + right) / 2;
 			Position midPoint = convexHull.get(mid);
@@ -198,7 +198,7 @@ public class ConvexHullTemplate {
 			}
 		}
 
-		// 그 각도에서 다각형 안쪽인지 바깥쪽인지 판단한다
+		// 그 각도에서 다각형 안쪽인지 바깥쪽인지 판단한다 (경계 포함이면 등호 추가)
 		if (ccw(convexHull.get(left), convexHull.get(right), targetPoint) > 0) {
 			return true;
 		}
