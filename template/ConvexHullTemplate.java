@@ -1,7 +1,3 @@
-// 52588KB, 712ms
-
-package bj9240;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,7 +7,7 @@ import java.util.List;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-public class Main {
+public class ConvexHullTemplate {
 	static final double INF = 987654321098765432.0;
 
 	/** 위치 객체 */
@@ -92,7 +88,7 @@ public class Main {
 		return ret;
 	}
 
-	/** 컨벡스 헐에 포함되는 정점들을 리스트에 담아서 리턴 */
+	/** 컨벡스 헐에 포함되는 정점들을 리스트에 담아서 리턴 (결과 리스트 순서는 반시계 방향) */
 	public static List<Position> getConvexHull(List<Position> positions) {
 		int size = positions.size();
 
@@ -127,9 +123,12 @@ public class Main {
 
 		// 아래 껍질과 위 껍질을 합쳐서 정답 계산
 		List<Position> ret = new ArrayList<>();
-		ret.addAll(lower);
-		ret.addAll(upper);
-
+		while (!lower.isEmpty()) {
+			ret.add(lower.pop());
+		}
+		while (!upper.isEmpty()) {
+			ret.add(upper.pop());
+		}
 		return ret;
 	}
 
@@ -169,6 +168,41 @@ public class Main {
 		}
 
 		return maxDist;
+	}
+
+	/** 점이 볼록 다각형 내부에 있는지 여부를 리턴한다 */
+	public static boolean isInside(Position targetPoint, List<Position> convexHull) {
+		int size = convexHull.size();
+
+		int left = 1;
+		int right = size - 1;
+
+		Position originPoint = convexHull.get(0);
+
+		// 전체 다각형 범위 각도에 포함되지 않는 경우
+		if (ccw(originPoint, convexHull.get(left), targetPoint) < 0) {
+			return false;
+		}
+		if (ccw(originPoint, targetPoint, convexHull.get(right)) < 0) {
+			return false;
+		}
+
+		// 이외의 경우, 어느 점과 어느 점 사이 각도에 포함되는지 찾는다
+		while (left + 1 < right) {
+			int mid = (left + right) / 2;
+			Position midPoint = convexHull.get(mid);
+			if (ccw(originPoint, midPoint, targetPoint) > 0) {
+				left = mid;
+			} else {
+				right = mid;
+			}
+		}
+
+		// 그 각도에서 다각형 안쪽인지 바깥쪽인지 판단한다
+		if (ccw(convexHull.get(left), convexHull.get(right), targetPoint) > 0) {
+			return true;
+		}
+		return false;
 	}
 	
 	/** 다각형의 넓이를 계산해서 리턴 */

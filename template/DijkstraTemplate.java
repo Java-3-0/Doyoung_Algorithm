@@ -9,6 +9,7 @@ import java.util.StringTokenizer;
 public class DijkstraTemplate {
 	static final int MAX_V = 5000;
 	static final int MAX_E = 10000;
+	static final int FAIL = -1;
 
 	static int V, E;
 	static List<Edge>[] adjList = new ArrayList[MAX_V + 1];
@@ -110,6 +111,6 @@ public class DijkstraTemplate {
 			}
 		}
 
-		return -1;
+		return FAIL;
 	}
 }

@@ -1,3 +1,7 @@
+// 22024KB, 304ms
+
+package bj15420;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,8 +11,8 @@ import java.util.List;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-public class RotatingCalipersTemplate {
-	static final double INF = 987654321098765432.0;
+public class Main {
+	static final double INF = 9876543210987654.3;
 
 	/** 위치 객체 */
 	static class Position implements Comparable<Position> {
@@ -37,13 +41,6 @@ public class RotatingCalipersTemplate {
 			return distance;
 		}
 
-		public double getDistanceSquareTo(Position p) {
-			double dy = this.y - p.y;
-			double dx = this.x - p.x;
-
-			return dy * dy + dx * dx;
-		}
-
 		@Override
 		public String toString() {
 			return "Position [x=" + x + ", y=" + y + "]";
@@ -57,7 +54,9 @@ public class RotatingCalipersTemplate {
 		StringTokenizer st;
 
 		// 점의 개수 입력
-		int N = Integer.parseInt(br.readLine());
+		st = new StringTokenizer(br.readLine(), " ");
+		int N = Integer.parseInt(st.nextToken());
+		double R = Double.parseDouble(st.nextToken());
 
 		// 위치 입력
 		Position[] positions = new Position[N];
@@ -67,15 +66,15 @@ public class RotatingCalipersTemplate {
 			double y = Double.parseDouble(st.nextToken());
 			positions[i] = new Position(x, y);
 		}
-		
+
 		// 볼록껍질 계산
 		List<Position> convexHull = getConvexHull(positions);
-		
-		// 최대 거리 계산
+
+		// 변과 그 변에서 가장 멀리 떨어진 점의 거리 중 최소값을 구한다
 		double answer = RotatingCalipers(convexHull);
-		
+
 		// 출력
-		System.out.println(answer);
+		System.out.print(answer);
 
 	} // end main
 
@@ -135,29 +134,17 @@ public class RotatingCalipersTemplate {
 
 		return ret;
 	}
-	
-	/** 다각형의 넓이를 계산해서 리턴 */
-	public static double getArea(List<Position> polygon) {
-		// 면적 계산
-		double totalArea = 0.0;
-		for (int i = 2; i < polygon.size(); i++) {
-			// 삼각형을 만들어서 그 면적을 누적하는 방식으로 계산
-			double area = 0.5 * ccw(polygon.get(0), polygon.get(i - 1), polygon.get(i));
-			totalArea += area;
-		}
-		totalArea = Math.abs(totalArea);
-		
-		return totalArea;
-	}
 
-	/** 회전하는 캘리퍼스를 이용하여 두 점 사이의 최대 거리를 구한다 */
+	/** 회전하는 캘리퍼스를 이용하여 각 변으로부터 가장 멀리 떨어진 점으로의 거리들 중 최소값을 구한다 */
 	public static double RotatingCalipers(List<Position> polygon) {
 		int size = polygon.size();
 
 		int idx2 = 1;
-		double maxDist = -INF;
+		double ret = INF;
 
 		for (int idx1 = 0; idx1 < size; idx1++) {
+			double maxDist = 0;
+
 			while (true) {
 				int nextIdx1 = (idx1 + 1) % size;
 				int nextIdx2 = (idx2 + 1) % size;
@@ -167,6 +154,9 @@ public class RotatingCalipersTemplate {
 				double y2 = polygon.get(nextIdx2).y - polygon.get(idx2).y;
 				double x2 = polygon.get(nextIdx2).x - polygon.get(idx2).x;
 
+				// 기준점을 A로 잡고
+				// idx1에서 nextIdx1로의 벡터는 B로 나타낸다
+				// idx2에서 nextIdx2로의 벡터는 C로 나타낸다.
 				Position A = new Position(0, 0);
 				Position B = new Position(y1, x1);
 				Position C = new Position(y2, x2);
@@ -177,17 +167,37 @@ public class RotatingCalipersTemplate {
 				}
 				// 반시계 방향이 끝날 때 거리를 계산하고, 루프를 빠져나옴으로써 idx1을 옮긴다.
 				else {
-					double dist = polygon.get(idx1).getDistanceTo(polygon.get(idx2));
-					if (maxDist < dist) {
-						maxDist = dist;
+					Position p1 = polygon.get(idx1);
+					Position p2 = polygon.get(nextIdx1);
+					Position p3 = polygon.get(idx2);
+
+					// x좌표가 같은 경우, divide by zero를 피하기 위해 따로 처리
+					if (p1.x == p2.x) {
+						double dist = Math.abs(p3.x - p1.x);
+						maxDist = Math.max(maxDist, dist);
 					}
+					// 일반적인 경우, 점과 직선 사이의 거리 공식 이용
+					else {
+						double m = (p2.y - p1.y) / (p2.x - p1.x);
+						double b = (-m * p1.x) + p1.y;
+
+						// mx - y + b = 0과 (p3.y, p3.x)의 거리를 구한다
+						double numer = Math.abs(m * p3.x - p3.y + b);
+						double denom = Math.sqrt(m * m + 1 * 1);
+						double dist = numer / denom;
+						maxDist = Math.max(maxDist, dist);
+					}
+
 					break;
 				}
-			}
+			} // end while true
 
-		}
+			// 최소값 갱신
+			ret = Math.min(ret, maxDist);
 
-		return maxDist;
+		} // end for idx1
+
+		return ret;
 	}
 
 }
