@@ -1,5 +1,7 @@
 // 92300KB, 332ms
 
+package bj4991;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
