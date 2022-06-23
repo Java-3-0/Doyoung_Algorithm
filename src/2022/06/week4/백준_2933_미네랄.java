@@ -1,4 +1,4 @@
-// 68236KB, 292ms
+// 68440KB, 256ms
 
 package bj2933;
 
@@ -94,7 +94,7 @@ public class Main {
 
 		// 정답 출력
 		String answer = gridToString();
-		System.out.print(answer);
+		System.out.println(answer);
 
 	} // end main
 
@@ -103,52 +103,51 @@ public class Main {
 		// 맨 아래 행과 연결된 미네랄들을 모두 탐색한다.
 		bfsFromGround();
 
-		// (아직 방문하지 않은 미네랄)로부터 (땅 or 땅과 연결된 미네랄)까지의 최소 수직 거리를 계산
+		// 땅과 연결되지 않은 미네랄들의 맨 아랫부분들을 구한다
+		int[] clusterBottoms = new int[C + 1];
+		for (int x = 1; x <= C; x++) {
+			for (int y = 1; y <= R; y++) {
+				if (!isVisited[y][x] && grid[y][x] == MINERAL) {
+					clusterBottoms[x] = y;
+					break;
+				}
+			}
+		}
+
+		// 그 아랫부분들로부터 땅과 연결된 부분까지의 거리를 구한다
 		int minDist = INF;
-		for (int y = 1; y <= R; y++) {
-			for (int x = 1; x <= C; x++) {
-				if (grid[y][x] == MINERAL && !isVisited[y][x]) {
-					int dist = getDistanceToDrop(y, x);
-					minDist = Math.min(minDist, dist);
-				}
+		for (int x = 1; x <= C; x++) {
+			if (clusterBottoms[x] == 0) {
+				continue;
 			}
+
+			int dist = 0;
+			for (int y = clusterBottoms[x] - 1; y >= 0; y--) {
+				dist++;
+
+				if (y == 0 || (isVisited[y][x] && grid[y][x] == MINERAL)) {
+					break;
+				}
+
+			}
+
+			minDist = Math.min(minDist, dist);
 		}
 
-		// 이동해야 하는 칸 수
 		int move = minDist - 1;
-		if (move == INF || move == 0) {
-			return;
-		}
 
-		// 이동시킨다
-		for (int y = 1 + move; y <= R; y++) {
-			for (int x = 1; x <= C; x++) {
-				if (grid[y][x] == MINERAL && !isVisited[y][x]) {
-					grid[y - move][x] = grid[y][x];
-					grid[y][x] = EMPTY;
+		System.out.println(move);
+
+		if (move != INF && move != 0) {
+			for (int y = 1; y <= R; y++) {
+				for (int x = 1; x <= C; x++) {
+					if (!isVisited[y][x] && grid[y][x] == MINERAL) {
+						grid[y - move][x] = grid[y][x];
+						grid[y][x] = EMPTY;
+					}
 				}
 			}
 		}
-	}
-
-	// (startY, startX) 위치의 미네랄이 떨어져야 하는 거리를 구해서 리턴 */
-	public static int getDistanceToDrop(int startY, int startX) {
-		int x = startX;
-
-		for (int dist = 1; dist <= R; dist++) {
-			int y = startY - dist;
-
-			if (y == 0) {
-				return dist;
-			}
-
-			if (y > 0 && grid[y][x] == MINERAL && isVisited[y][x]) {
-				return dist;
-			}
-
-		}
-
-		return INF;
 	}
 
 	/** 땅으로부터 연결된 미네랄들을 모두 방문한다 */
