@@ -97,7 +97,7 @@ public class Main {
 		Deque<Position> snakePositions = new ArrayDeque<>();
 		Position start = new Position(1, 1);
 		snakePositions.offerFirst(start);
-		grid[start.y][start.x] = SNAKE;
+		start.setGridVal(SNAKE);
 		int dir = 0;
 		int timeNow = 0;
 
