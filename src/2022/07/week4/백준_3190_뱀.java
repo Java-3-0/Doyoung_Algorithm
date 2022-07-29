@@ -88,6 +88,7 @@ public class Main {
 				break;
 			case 'L':
 				directionChanges[time] = -1;
+				break;
 			default:
 				break;
 			}
