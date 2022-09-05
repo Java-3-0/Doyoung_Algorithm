@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    static final int INF = 987654321;
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
@@ -39,6 +37,7 @@ public class Main {
         int maxRight = rightPQ.isEmpty() ? 0 : rightPQ.peek();
         answer -= Math.max(maxLeft, maxRight);
 
+        // 나머지 방문할 곳 처리
         while (!leftPQ.isEmpty()) {
             for (int i = 0; i < M; i++) {
                 if (!leftPQ.isEmpty()) {
