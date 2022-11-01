@@ -18,8 +18,6 @@ bool isName(string s);
 bool isLastWord(string word);
 
 int main() {
-	freopen("input.txt", "r", stdin);
-
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
