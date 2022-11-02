@@ -19,15 +19,15 @@ typedef long long ll;
 
 const int INF = 987654321;
 
-bool isPossible(ull N, ull K);
-ull getPieceCount(ull horizontalCuts, ull N);
+bool isPossible(ll N, ll K);
+ll getPieceCount(ll horizontalCuts, ll N);
 
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	ull N, K;
+	ll N, K;
 	cin >> N >> K;
 
 	if (isPossible(N, K)) {
@@ -41,39 +41,36 @@ int main() {
 	return 0;
 }
 
-bool isPossible(ull N, ull K) {
-	ull left = 0;
-	ull right = N / 2;
+bool isPossible(ll N, ll K) {
+	ll left = 0;
+	ll right = N / 2;
 
 	while (left <= right) {
-		ull mid = (left + right) / 2;
-		ull pieces = getPieceCount(mid, N);
+		ll mid = (left + right) / 2;
+		ll pieces = getPieceCount(mid, N);
 
 		// 조각이 딱 맞으면
 		if (pieces == K) {
 			return true;
 		}
 
-        if (left == right) break;
-
-        // 조각이 부족하면
-        if (pieces < K) {
-            left = mid + 1;
-        }
-        // 조각이 너무 많으면
-        else {
-            right = mid - 1;
-        }
-        
+		// 조각이 부족하면
+		else if (pieces < K) {
+			left = mid + 1;
+		}
+		// 조각이 너무 많으면
+		else {
+			right = mid - 1;
+		}
 	}
 
 	return false;
 }
 
-ull getPieceCount(ull horizontalCuts, ull N) {
-	ull verticalCuts = N - horizontalCuts;
+ll getPieceCount(ll horizontalCuts, ll N) {
+	ll verticalCuts = N - horizontalCuts;
 
-	ull ret = (horizontalCuts + 1) * (verticalCuts + 1);
+	ll ret = (horizontalCuts + 1) * (verticalCuts + 1);
 
 	return ret;
 }
