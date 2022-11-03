@@ -1,7 +1,3 @@
-// 47072KB, 242ms
-
-package swea1251;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,19 +14,15 @@ public class Solution {
 
 	/** 위치를 나타내는 객체 */
 	static class Position {
-		/** x좌표 */
 		double x;
-		/** y좌표 */
 		double y;
 
-		/** x좌표와 y좌표를 받아서 위치 객체를 만드는 생성자 */
 		public Position(double x, double y) {
 			super();
 			this.x = x;
 			this.y = y;
 		}
 
-		/** 이 위치에서 위치 p까지 터널을 건설할 때 드는 비용을 리턴 */
 		public double getTunnelCost(Position p) {
 			double xDist = this.x - p.x;
 			double yDist = this.y - p.y;
@@ -40,7 +32,6 @@ public class Solution {
 		}
 	}
 
-	// 메인 함수 시작
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
@@ -51,13 +42,11 @@ public class Solution {
 		for (int testCase = 1; testCase <= TESTS; testCase++) {
 			// 정점 수 입력
 			final int V = Integer.parseInt(br.readLine());
-
-			// 각 정점 정보 입력
 			Position[] islands = new Position[V];
 
-			// 입력이 x0, y0, x1, y1, x2, y2, ... 형태가 아니라
-			// x0, x1, x2, ... x(n-1) 이후에 y0, y1, y2, ... y(n-1)이 들어오기 때문에
-			// 임시로 담아두었다가 처리하기 위한 배열
+			/* 입력이 x0, y0, x1, y1, x2, y2, ... 형태가 아니라
+			 x0, x1, x2, ... x(n-1) 이후에 y0, y1, y2, ... y(n-1)이 들어오기 때문에
+			 임시로 담아두었다가 처리하기 위한 배열 */
 			double[] tmpX = new double[V];
 
 			// 각 정점 x좌표 입력
@@ -76,11 +65,9 @@ public class Solution {
 			// 세율 입력
 			taxRate = Double.parseDouble(br.readLine());
 
-			// 비용(= 거리 * 거리 * 세율)을 weight로 가지는 그래프 인접 행렬 표현
+			// 배열 초기화
 			double[][] adjMatrix = new double[V][V];
-			// 이미 연결된 정점들에서 아직 연결되지 않은 각 정점으로 가는 최소 간선
 			double[] minEdges = new double[V];
-			// 방문 여부를 나타낼 배열
 			boolean[] isVisited = new boolean[V];
 
 			// 각 정점간의 터널 비용 계산해서 adjMatrix에 저장
