@@ -2,20 +2,42 @@ import java.util.*
 import kotlin.math.min
 
 const val MAX_V = 1000
-const val INF = 987654321
+const val INF = 98765432109876543L
 const val NOT_ASSIGNED = -1
 
 val adjList = Array(MAX_V + 1) { mutableListOf<Int>() }
-val capacities = Array(MAX_V + 1) { IntArray(MAX_V + 1) { 0 } }
-val flows = Array(MAX_V + 1) { IntArray(MAX_V + 1) { 0 } }
+val capacities = Array(MAX_V + 1) { LongArray(MAX_V + 1) { 0L } }
+val flows = Array(MAX_V + 1) { LongArray(MAX_V + 1) { 0L } }
 val vertexLevels = IntArray(MAX_V + 1) { NOT_ASSIGNED }
 val idxToStartSearch = IntArray(MAX_V + 1) { 0 }
-var source = 0
-var sink = 0
+var source = -1
+var sink = -1
+
+/** 메모리 초기화 */
+fun initMemory() {
+    for (list in adjList) {
+        list.clear()
+    }
+    for (arr in capacities) {
+        Arrays.fill(arr, 0L)
+    }
+    for (arr in flows) {
+        Arrays.fill(arr, 0L)
+    }
+    Arrays.fill(vertexLevels, NOT_ASSIGNED)
+    Arrays.fill(idxToStartSearch, 0)
+}
+
+/** 간선 연결 */
+fun connectEdge(a: Int, b: Int, capacity: Long) {
+    capacities[a][b] = capacity
+    adjList[a].add(b)
+    adjList[b].add(a)
+}
 
 /** 디닉 알고리즘을 통해 max flow 를 구해서 리턴한다 */
-fun getMaxFlow(): Int {
-    var ret = 0
+fun getMaxFlow(): Long {
+    var ret = 0L
     while (true) {
         setVertexLevelsByBFS()
         if (vertexLevels[sink] == NOT_ASSIGNED) {
@@ -25,7 +47,7 @@ fun getMaxFlow(): Int {
         Arrays.fill(idxToStartSearch, 0)
         while (true) {
             val flow = findPathToSendFlowByDFS(source, INF)
-            if (flow == 0) {
+            if (flow == 0L) {
                 break
             } else {
                 ret += flow
@@ -61,7 +83,7 @@ fun setVertexLevelsByBFS() {
 }
 
 /** flow 를 보낼 경로를 dfs 로 찾고, 그 flow 양을 리턴한다 */
-fun findPathToSendFlowByDFS(cur: Int, bottleneck: Int): Int {
+fun findPathToSendFlowByDFS(cur: Int, bottleneck: Long): Long {
     if (cur == sink) {
         return bottleneck
     }

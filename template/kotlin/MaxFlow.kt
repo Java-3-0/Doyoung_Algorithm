@@ -1,18 +1,39 @@
 import java.util.*
 import kotlin.math.min
 
-const val MAX_V = 100
-const val INF = 987654321
+const val MAX_V = 1000
+const val INF = 98765432109876543L
 const val NOT_VISITED = -1
 
 val adjList = Array(MAX_V + 1) { mutableListOf<Int>() }
-val capacities = Array(MAX_V + 1) { IntArray(MAX_V + 1) { 0 } }
-val flows = Array(MAX_V + 1) { IntArray(MAX_V + 1) { 0 } }
+val capacities = Array(MAX_V + 1) { LongArray(MAX_V + 1) { 0L } }
+val flows = Array(MAX_V + 1) { LongArray(MAX_V + 1) { 0L } }
 val cameFrom = IntArray(MAX_V + 1)
 
+/** 메모리 초기화 */
+fun initMemory() {
+    for (list in adjList) {
+        list.clear()
+    }
+    for (arr in capacities) {
+        Arrays.fill(arr, 0L)
+    }
+    for (arr in flows) {
+        Arrays.fill(arr, 0L)
+    }
+    Arrays.fill(cameFrom, NOT_VISITED)
+}
+
+/** 간선 연결 */
+fun connectEdge(a: Int, b: Int, capacity: Long) {
+    capacities[a][b] = capacity
+    adjList[a].add(b)
+    adjList[b].add(a)
+}
+
 /** source 에서 sink 로 보낼 수 있는 최대 유량을 구한다 */
-fun getMaxFlow(source: Int, sink: Int): Int {
-    var maxFlow = 0
+fun getMaxFlow(source: Int, sink: Int): Long {
+    var maxFlow = 0L
 
     while (true) {
         // 메모리 초기화
