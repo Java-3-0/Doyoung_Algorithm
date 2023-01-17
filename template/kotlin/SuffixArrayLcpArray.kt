@@ -40,13 +40,13 @@ fun getSuffixArray(str: String): List<Int> {
     return suffixArr
 }
 
-/** suffixArray 의 역이 되는 배열를 구해서 리턴 */
-fun getInvSuffixArray(suffixArray: List<Int>): List<Int> {
-    val invSuffixArray = MutableList(suffixArray.size) { -1 }
-    for (i in suffixArray.indices) {
-        invSuffixArray[suffixArray[i]] = i
+/** 배열의 역함수가 되는 배열를 구해서 리턴 */
+fun getInverseArray(arr: List<Int>): List<Int> {
+    val invArray = MutableList(arr.size) { -1 }
+    for (i in arr.indices) {
+        invArray[arr[i]] = i
     }
-    return invSuffixArray
+    return invArray
 }
 
 /** 문자열의 longest common prefix array 를 구해서 리턴 */
@@ -54,7 +54,7 @@ fun getLcpArray(str: String, suffixArray: List<Int>): List<Int> {
     val len = str.length
     val lcpArray = MutableList(len - 1) { -1 }
 
-    val invSuffixArray = getInvSuffixArray(suffixArray)
+    val invSuffixArray = getInverseArray(suffixArray)
 
     var commonPrefixLen = 0
     for (i in 0 until len) {
