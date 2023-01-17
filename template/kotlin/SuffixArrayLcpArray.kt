@@ -15,7 +15,7 @@ fun getSuffixArray(str: String): List<Int> {
         groupNum[i] = str[i].code
     }
 
-    // 비교 길이를 2배씩 증가시키면서 비교
+    // 비교 길이를 2배씩 증가사키면서 비교
     var lenToCompare = 1
     while (lenToCompare < len) {
         // 그룹 번호 기준으로 원하는 길이만큼을 비교하는 컴퍼레이터 생성해서 정렬
@@ -40,15 +40,21 @@ fun getSuffixArray(str: String): List<Int> {
     return suffixArr
 }
 
+/** suffixArray 의 역이 되는 배열를 구해서 리턴 */
+fun getInvSuffixArray(suffixArray: List<Int>): List<Int> {
+    val invSuffixArray = MutableList(suffixArray.size) { -1 }
+    for (i in suffixArray.indices) {
+        invSuffixArray[suffixArray[i]] = i
+    }
+    return invSuffixArray
+}
+
 /** 문자열의 longest common prefix array 를 구해서 리턴 */
 fun getLcpArray(str: String, suffixArray: List<Int>): List<Int> {
     val len = str.length
     val lcpArray = MutableList(len - 1) { -1 }
 
-    val invSuffixArray = MutableList(len) { -1 }
-    for (i in suffixArray.indices) {
-        invSuffixArray[suffixArray[i]] = i
-    }
+    val invSuffixArray = getInvSuffixArray(suffixArray)
 
     var commonPrefixLen = 0
     for (i in 0 until len) {
@@ -71,7 +77,7 @@ fun getLcpArray(str: String, suffixArray: List<Int>): List<Int> {
         // 구한 값을 lcp 배열에 저장
         lcpArray[idx] = commonPrefixLen
 
-        /* 
+        /*
         i + 1 위치에서 시작하는 접미사는 i 위치에서 시작하는 접미사가 일치했던 것에서
         앞 글자 하나 뺀 것만큼은 똑같이 일치하므로
         0부터가 아니라 commonPrefixLen - 1 부터만 탐색하도록 한다
