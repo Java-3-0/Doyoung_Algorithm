@@ -1,9 +1,11 @@
+import java.math.BigInteger
+
 object ChineseRemainderTheorem {
     /** x = a (mod m) 이라는 합동식 하나 */
-    data class Equation(val a: Long, val m: Long)
+    data class Equation(val a: BigInteger, val m: BigInteger)
 
     /** 중국인의 나머지 정리 결과 */
-    data class ChineseRemainderResult(val r: Long, val m: Long, val isPossible: Boolean)
+    data class ChineseRemainderResult(val r: BigInteger, val m: BigInteger, val isPossible: Boolean)
 
     /** 여러 합동식을 중국인의 나머지 정리로 푼다 */
     fun solve(equationList: List<Equation>): ChineseRemainderResult {
@@ -19,7 +21,7 @@ object ChineseRemainderTheorem {
             val gcd = ExtendEuclidean.getGCD(m, m2)
 
             if (a % gcd != a2 % gcd) {
-                return ChineseRemainderResult(0L, 0L, false)
+                return ChineseRemainderResult(BigInteger.ZERO, BigInteger.ZERO, false)
             }
 
             val euclideanResult = ExtendEuclidean.solveExtendedEuclidean(m / gcd, m2 / gcd)
@@ -39,18 +41,18 @@ object ChineseRemainderTheorem {
 }
 
 object ExtendEuclidean {
-    data class EuclideanResult(val gcd: Long, val s: Long, val t: Long)
+    data class EuclideanResult(val gcd: BigInteger, val s: BigInteger, val t: BigInteger)
 
     /** a * s + b * t = gcd(a, b)가 되는 gcd, s, t 값을 구해서 리턴 */
-    fun solveExtendedEuclidean(a: Long, b: Long): EuclideanResult {
-        var sPrev = 1L
-        var sNow = 0L
-        var tPrev = 0L
-        var tNow = 1L
+    fun solveExtendedEuclidean(a: BigInteger, b: BigInteger): EuclideanResult {
+        var sPrev = BigInteger.ONE
+        var sNow = BigInteger.ZERO
+        var tPrev = BigInteger.ZERO
+        var tNow = BigInteger.ONE
         var rPrev = a
         var rNow = b
 
-        while (rNow != 0L) {
+        while (rNow != BigInteger.ZERO) {
             val q = rPrev / rNow
 
             val rTmp = rPrev % rNow
@@ -69,24 +71,20 @@ object ExtendEuclidean {
         return EuclideanResult(rPrev, sPrev, tPrev)
     }
 
-    fun getMultInv(a: Long, mod: Long): Long {
+    fun getMultInv(a: BigInteger, mod: BigInteger): BigInteger {
         val gcd = getGCD(a, mod)
-        return if (gcd != 1L) -1L else (solveExtendedEuclidean(a, mod).s + mod) % mod
+        return if (gcd != BigInteger.ONE) -BigInteger.ONE else (solveExtendedEuclidean(a, mod).s + mod) % mod
     }
 
-    fun getGCD(a: Long, b: Long): Long {
-        return if (a == 0L) b else getGCD(b % a, a)
+    fun getGCD(a: BigInteger, b: BigInteger): BigInteger {
+        return if (a == BigInteger.ZERO) b else getGCD(b % a, a)
     }
 }
 
-object Mod {
-    /** 모듈러 덧셈 */
-    fun modAdd(a: Long, b: Long, mod: Long): Long {
-        return (a + b) % mod
-    }
+fun modAdd(a: BigInteger, b: BigInteger, mod: BigInteger): BigInteger {
+    return (a + b) % mod
+}
 
-    /** 모듈러 곱셈 */
-    fun modMult(a: Long, b: Long, mod: Long): Long {
-        return (a * b) % mod
-    }
+fun modMult(a: BigInteger, b: BigInteger, mod: BigInteger): BigInteger {
+    return (a * b) % mod
 }
