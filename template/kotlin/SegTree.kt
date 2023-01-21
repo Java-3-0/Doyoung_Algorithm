@@ -10,37 +10,33 @@ data class SegTree(val seq: List<Long>) {
     }
 
     /** 세그트리를 초기화 */
-    private fun initialize(start: Int, end: Int, idx: Int): Long {
-        return if (start == end) {
+    private fun initialize(start: Int, end: Int, idx: Int) {
+        if (start == end) {
             nodes[idx] = seq[start]
-            nodes[idx]
         } else {
             val mid = (start + end) / 2
-            val a = initialize(start, mid, 2 * idx)
-            val b = initialize(mid + 1, end, 2 * idx + 1)
-
-            nodes[idx] = a + b
-            nodes[idx]
+            initialize(start, mid, 2 * idx)
+            initialize(mid + 1, end, 2 * idx + 1)
+            nodes[idx] = nodes[2 * idx] + nodes[2 * idx + 1]
         }
     }
 
     /** target 위치를 v로 바꾸고 해당되는 세그트리 부분을 업데이트 (내부 함수) */
-    private fun update(start: Int, end: Int, idx: Int, target: Int, v: Long): Long {
+    private fun update(start: Int, end: Int, idx: Int, target: Int, v: Long) {
         // 범위에 속하지 않는 경우
         if (target !in start .. end) {
-            return nodes[idx]
+            return
         }
         // 끝까지 가서 찾은 경우
         if (start == end) {
             nodes[idx] = v
-            return nodes[idx]
+            return
         }
         // 더 찾아봐야 하는 경우
         val mid = (start + end) / 2
-        val a = update(start, mid, 2 * idx, target, v)
-        val b = update(mid + 1, end, 2 * idx + 1, target, v)
-        nodes[idx] = a + b
-        return nodes[idx]
+        update(start, mid, 2 * idx, target, v)
+        update(mid + 1, end, 2 * idx + 1, target, v)
+        nodes[idx] = nodes[2 * idx] + nodes[2 * idx + 1]
     }
 
     /** [leftRange, rightRange] 구간에 대한 쿼리 값을 리턴 (내부 함수) */
@@ -61,8 +57,8 @@ data class SegTree(val seq: List<Long>) {
     }
 
     /** target 위치를 v로 바꾸고 해당되는 세그트리 부분을 업데이트 */
-    fun update(target: Int, v: Long): Long {
-        return update(0, seq.size - 1, 1, target, v)
+    fun update(target: Int, v: Long) {
+        update(0, seq.size - 1, 1, target, v)
     }
 
     /** [leftRange, rightRange] 구간에 대한 쿼리 값을 리턴 */
